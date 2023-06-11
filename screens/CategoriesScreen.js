@@ -18,6 +18,7 @@ export default CategoriesScreen = (props) => {
 			data={CATEGORIES}
 			keyExtractor={(item, index) => item.id}
 			renderItem={renderCategoryItem}
+			numColumns={2}
 		/>
 	);
 };
