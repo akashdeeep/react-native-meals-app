@@ -31,7 +31,7 @@ export default MealsOverviewScreen = (props) => {
 
 	renderMealItem = (itemData) => {
 		const mealItemProps = {
-			if: itemData.item.id,
+			id: itemData.item.id,
 			title: itemData.item.title,
 			imageUrl: itemData.item.imageUrl,
 			duration: itemData.item.duration,
