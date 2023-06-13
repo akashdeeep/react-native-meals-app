@@ -11,7 +11,7 @@ import FavouritesScreen from "./screens/FavouritesScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { store } from "./store/redux/store";
 
 import FavouritesContextProvider from "./store/context/favourites-context";
 
