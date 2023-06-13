@@ -10,7 +10,8 @@ import {
 } from "react-native";
 
 import { MEALS, CATEGORIES } from "../data/dummy-data";
-import MealItem from "../components/MealItem";
+import MealItem from "../components/MealsList/MealItem";
+import MealsList from "../components/MealsList/MealsList";
 
 export default MealsOverviewScreen = (props) => {
 	const catId = props.route.params.categoryId;
@@ -29,28 +30,7 @@ export default MealsOverviewScreen = (props) => {
 		});
 	}, [catId, props.navigation]);
 
-	renderMealItem = (itemData) => {
-		const mealItemProps = {
-			id: itemData.item.id,
-			title: itemData.item.title,
-			imageUrl: itemData.item.imageUrl,
-			duration: itemData.item.duration,
-			complexity: itemData.item.complexity,
-			affordability: itemData.item.affordability,
-		};
-
-		return <MealItem {...mealItemProps} />;
-	};
-
-	return (
-		<View style={styles.container}>
-			<FlatList
-				data={displayedMeals}
-				keyExtractor={(item, index) => item.id}
-				renderItem={renderMealItem}
-			/>
-		</View>
-	);
+	return <MealsList items={displayedMeals} navigation={props.navigation} />;
 };
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import Meal from "../models/meal";
 
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useContext, useSelector, useDispatch } from "react";
 import {
 	View,
 	Text,
@@ -13,14 +13,31 @@ import { MEALS } from "../data/dummy-data";
 // import { ScrollView } from "react-native-gesture-handler";
 import MealDetails from "../components/MealDetails";
 import IconButton from "../components/IconButton";
+import { addFavourite } from "../store/redux/favourites";
+import { removeFavourite } from "../store/redux/favourites";
+// import { FavouritesContext } from "../store/context/favourites-context";
 
 export default MealDetailsScreen = (props) => {
+	// const favouritesContext = useContext(FavouritesContext);
+	// console.log("favouritesContext", favouritesContext);
+	const favouriteMealIds = useSelector((state) => state.favourites.ids);
+	const dispatch = useDispatch();
+
 	const mealId = props.route.params.mealId;
 
 	const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-	headerButtonPressHandler = () => {
-		console.log("Marked as favorite!");
+	const mealIsFavourite = favouriteMealIds.includes(mealId);
+
+	toggleFavourite = () => {
+		// console.log("toggleFavourite", selectedMeal.id, mealIsFavourite);
+		if (mealIsFavourite) {
+			// favouritesContext.removeFavourite(selectedMeal.id);
+			dispatch(removeFavourite({ id: mealId }));
+		} else {
+			// favouritesContext.addFavourite(meal);
+			dispatch(addFavourite({ id: mealId }));
+		}
 	};
 
 	useLayoutEffect(() => {
@@ -29,14 +46,14 @@ export default MealDetailsScreen = (props) => {
 			headerRight: () => {
 				return (
 					<IconButton
-						icon="star"
+						icon={mealIsFavourite ? "star" : "star-outline"}
 						color="white"
-						onPress={headerButtonPressHandler}
+						onPress={toggleFavourite}
 					/>
 				);
 			},
 		});
-	}, [props.navigation, selectedMeal]);
+	}, [props.navigation, selectedMeal, mealIsFavourite]);
 
 	return (
 		<ScrollView>
